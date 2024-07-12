@@ -58,5 +58,9 @@ def parse_object(data: dict, name: str) -> None:
         }
         return new_ob
     else:
-        print("Racer not found in data.")
+        other_ob = {
+            "session": session_data,
+            "racer": None
+        }
+        return other_ob
 
