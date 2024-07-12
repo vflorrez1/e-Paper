@@ -52,6 +52,7 @@ def parse_object(data: dict, name: str) -> None:
 
     print("Racer Data:")
     if racer_data:
+        racer_data['sessionCountDown'] = session_data['sessionCountDown']
         return parse_racer(racer_data)
     else:
         print("Racer not found in data.")
