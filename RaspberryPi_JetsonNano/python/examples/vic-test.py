@@ -93,7 +93,8 @@ async def connect():
                     elif session_data['sessionCountDown'] == '00:00':
                         draw_text((15, top_half_line_height), 'Session Ended')   
                     else:          
-                        print(racer_data)
+                        print("Racer Data:")
+                        print(json.dumps(racer_data, indent=4))
 
                         # top rect
                         draw.rectangle([(0, y_top), (screen_width, y_mid)], outline=0)
