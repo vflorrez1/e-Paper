@@ -31,6 +31,11 @@ try:
     y_top, y_bottom = 0, 122
     y_mid = y_bottom / 2
 
+    top_line_1 = 50
+    top_line_2 = (screen_width + top_line_1) / 2
+    top_half_line_height = 20
+    bottom_half_line_height = 80
+
 
     print('epd width', epd.width)
     print('epd height', epd.height)
@@ -45,32 +50,34 @@ try:
     epd.displayPartBaseImage(epd.getbuffer(time_image))
     num = 0
     while (True):
+        # top rect
         draw.rectangle([(0, y_top), (screen_width, y_mid)], outline=0)
 
         # top first line
-        draw.line([(50, y_top), (50, y_mid)], fill = 0,width = 1)
+        draw.line([(top_line_1, y_top), (top_line_1, y_mid)], fill=0, width=1)
 
         # top second line
-        draw.line([(130, 0), (130, y_mid)], fill = 0,width = 1)
+        draw.line([(top_line_2, 0), (top_line_2, y_mid)], fill=0, width=1)
 
+        # bottom rect
         draw.rectangle([(0, y_mid), (screen_width, y_bottom)], outline=0)
 
-        draw.line([(100, y_mid),(100, y_bottom)], fill = 0,width = 1)
+        draw.line([(screen_width / 2, y_mid), (screen_width / 2, y_bottom)], fill=0, width=1)
 
         # position
-        draw.text((15, 18), 'P1', fill='black', font=font1)
+        draw.text((15, top_half_line_height), 'P1', fill='black', font=font1)
 
         # last lap
-        draw.text((62, 18), '43.114', fill='black', font=font1)
+        draw.text((70, top_half_line_height), '43.114', fill='black', font=font1)
 
         # delta
-        draw.text((143, 18), '0.455', fill='black', font=font1)
+        draw.text((170, top_half_line_height), '0.455', fill='black', font=font1)
 
         # best lap
-        draw.text((125, 65), '43.115', fill='black', font=font1)
+        draw.text((145, bottom_half_line_height), '43.115', fill='black', font=font1)
 
         # count down
-        draw.text((11, 65), time.strftime('%H:%M:%S'), fill='black', font=font1)
+        draw.text((17, bottom_half_line_height), time.strftime('%H:%M:%S'), fill='black', font=font1)
         epd.displayPartial(epd.getbuffer(time_image))
         num = num + 1
         if(num == 20):
