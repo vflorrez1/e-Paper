@@ -28,25 +28,20 @@ try:
     screen_width = epd.height
     screen_height = epd.width
 
-    y_top, y_bottom = 0, 122
-    y_mid = y_bottom / 2
 
-    top_line_1 = 50
-    top_line_2 = (screen_width + top_line_1) / 2
-    top_half_line_height = 20
     bottom_half_line_height = 80
 
 
     # # partial update
     logging.info("Vics test time...")
     time_image = Image.new('1', (epd.height, epd.width), 255)
-    draw = ImageDraw.Draw(time_image)
+    time_draw = ImageDraw.Draw(time_image)
     epd.displayPartBaseImage(epd.getbuffer(time_image))
     num = 0
     while (True):
         # count down
-        draw.rectangle((120, 80, 220, 105), fill = 255)
-        draw.text((17, bottom_half_line_height), time.strftime('%H:%M:%S'), fill=0, font=font1)
+        time_draw.rectangle((120, 80, 220, 105), fill = 255)
+        time_draw.text((17, bottom_half_line_height), time.strftime('%H:%M:%S'), fill=0, font=font1)
         epd.displayPartial(epd.getbuffer(time_image))
         num = num + 1
         if(num == 20):
