@@ -24,10 +24,9 @@ if os.path.exists(libdir):
 
 import logging
 from waveshare_epd import epd2in13_V4
-import time
 from PIL import Image, ImageDraw, ImageFont
 
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.INFO)
 
 async def connect():
     try:
@@ -63,6 +62,7 @@ async def connect():
 
             try:
                 driver_d = await ws.recv()
+                print(driver_d['D'])
                 name = driver_d['D'][0]['N']
             except Exception as error:
                     print("could not get random name")    
