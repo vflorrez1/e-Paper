@@ -46,7 +46,7 @@ try:
     while (True):
         # count down
         draw.rectangle((120, 80, 220, 105), fill = 255)
-        draw.text((17, bottom_half_line_height), time.strftime('%H:%M:%S'), fill='black', font=font1)
+        draw.text((17, bottom_half_line_height), time.strftime('%H:%M:%S'), fill=0, font=font1)
         epd.displayPartial(epd.getbuffer(time_image))
         num = num + 1
         if(num == 20):
