@@ -34,15 +34,27 @@ def parse_racer(racer: dict) -> dict:
     }
     return racer_data
 
+def milliseconds_to_mm_ss(milliseconds):
+    # Convert milliseconds to total seconds
+    total_seconds = milliseconds / 1000
+    
+    # Calculate minutes and remaining seconds
+    minutes, seconds = divmod(total_seconds, 60)
+    
+    # Format minutes and seconds as two-digit strings
+    minutes_str = f"{int(minutes):02}"
+    seconds_str = f"{int(seconds):02}"
+    
+    return f"{minutes_str}:{seconds_str}"
+
 
 def parse_object(data: dict, name: str) -> None:
     data = json.loads(data)
-    countdown_date = datetime.fromtimestamp(data["C"] / 1000)
     session_data = {
         "sessionStartTime": datetime.fromtimestamp(data["T"]).strftime('%Y-%m-%d %H:%M:%S'),
         "sessionName": data["N"],
         "sessionLaps": data["L"],
-        "sessionCountDown": f"{countdown_date.minute}:{countdown_date.second}",
+        "sessionCountDown": milliseconds_to_mm_ss(data["C"]),
     }
 
     racer_data = next((racer for racer in data["D"] if racer["N"] == name), None)
