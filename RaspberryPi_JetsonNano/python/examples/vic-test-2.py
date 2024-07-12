@@ -25,9 +25,12 @@ try:
 
     # Drawing on the image
     font1 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 24)
+    screen_width = epd.height
+    screen_height = epd.width
 
     y_top, y_bottom = 0, 122
     y_mid = y_bottom / 2
+
 
     print('epd width', epd.width)
     print('epd height', epd.height)
@@ -42,17 +45,17 @@ try:
     epd.displayPartBaseImage(epd.getbuffer(time_image))
     num = 0
     while (True):
-        draw.rectangle([(0, y_top), (200, y_mid)], outline=0)
+        draw.rectangle([(0, y_top), (screen_width, y_mid)], outline=0)
 
         # top first line
         draw.line([(50, y_top), (50, y_mid)], fill = 0,width = 1)
 
         # top second line
-        draw.line([(130, 0), (130, 50)], fill = 0,width = 1)
+        draw.line([(130, 0), (130, y_mid)], fill = 0,width = 1)
 
-        draw.rectangle([(0, 50), (200, 100)], outline=0)
+        draw.rectangle([(0, y_mid), (screen_width, y_bottom)], outline=0)
 
-        draw.line([(100, 50),(100, 100)], fill = 0,width = 1)
+        draw.line([(100, y_mid),(100, y_bottom)], fill = 0,width = 1)
 
         # position
         draw.text((15, 18), 'P1', fill='black', font=font1)
