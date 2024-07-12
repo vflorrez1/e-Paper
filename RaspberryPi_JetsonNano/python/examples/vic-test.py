@@ -10,30 +10,12 @@ from parse_object import parse_object
 config = {
     "url": "wss://webserver14.sms-timing.com:10015/",
     "initWSMessage": "START 19476@teamsportdocklands",
-    "driverName": "Greg",
-    "headers": {
-        "Pragma": "no-cache",
-        "Accept": "*/*",
-        "Sec-WebSocket-Key": "2JpCv",
-        "Sec-Fetch-Site": "cross-site",
-        "Sec-WebSocket-Version": "13",
-        "Sec-WebSocket-Extensions": "permessage-deflate",
-        "Cache-Control": "no-cache",
-        "Sec-Fetch-Mode": "websocket",
-        "Accept-Language": "en-GB,en;q=0.9",
-        "Origin": "ionic://localhost",
-        "User-Agent":
-            "Mozilla/5.0 (iPhone; CPU iPhone OS 17_5_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148",
-        "Connection": "Upgrade",
-        "Accept-Encoding": "gzip, deflate",
-        "Upgrade": "websocket",
-        "Sec-Fetch-Dest": "websocket",
-    },
+    "driverName": "Afam",
 }
 
 initWSMessage = config['initWSMessage']
-headers = config['headers']
 url = config['url']
+driver_name = config['driverName']
 
 picdir = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'pic')
 libdir = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'lib')
@@ -81,7 +63,7 @@ async def connect():
             while (True):
                 try:
                     data = await ws.recv()
-                    all_data = parse_object(data, 'Ben M')
+                    all_data = parse_object(data, driver_name)
                     racer_data = all_data['racer']
                     session_data = all_data['session']
                     # mask rect
