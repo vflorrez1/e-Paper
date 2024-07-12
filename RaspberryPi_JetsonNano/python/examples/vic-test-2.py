@@ -44,6 +44,8 @@ try:
     epd.displayPartBaseImage(epd.getbuffer(time_image))
     num = 0
     while (True):
+        # mask rect
+        draw.rectangle([(0, y_top), (screen_width, y_bottom)], fill=225)
         # top rect
         draw.rectangle([(0, y_top), (screen_width, y_mid)], outline=0)
 
