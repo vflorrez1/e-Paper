@@ -88,7 +88,7 @@ async def connect():
                     draw.rectangle([(0, y_top), (screen_width, y_bottom)], fill=225)
                     if racer_data is None:
                         draw.text((15, top_half_line_height), 'Racer not found', fill='black', font=font1)
-                        draw.text((15, bottom_half_line_height), session_data['sessionCountDown'], fill='black', font=font1)
+                        # draw.text((15, bottom_half_line_height), session_data['sessionCountDown'], fill='black', font=font1)
                     elif session_data['sessionCountDown'] == '0:0':
                         draw.text((15, top_half_line_height), 'Session Ended', fill='black', font=font1)   
                     else:          
