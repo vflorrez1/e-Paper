@@ -52,10 +52,11 @@ def parse_object(data: dict, name: str) -> None:
 
     print("Racer Data:")
     if racer_data:
-        new_data = parse_racer(racer_data)
-        new_data['sessionCountDown'] = session_data['sessionCountDown']
-        print(json.dumps(new_data, indent=4))
-        return new_data
+        new_ob = {
+            "session": session_data,
+            "racer": parse_racer(racer_data)
+        }
+        return new_ob
     else:
         print("Racer not found in data.")
 

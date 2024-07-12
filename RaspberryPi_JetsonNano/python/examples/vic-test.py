@@ -74,7 +74,6 @@ async def connect():
         time_image = Image.new('1', (epd.height, epd.width), 255)
         draw = ImageDraw.Draw(time_image)
         epd.displayPartBaseImage(epd.getbuffer(time_image))
-        num = 0
         async with websockets.connect(url) as ws:
             print("Connected to the server")
             await ws.send(initWSMessage)
@@ -82,14 +81,16 @@ async def connect():
             while (True):
                 try:
                     data = await ws.recv()
-                    racer_data = parse_object(data, 'Paul Bazooka')
-
+                    all_data = parse_object(data, 'Paul Bazooka')
+                    racer_data = all_data['racer']
+                    session_data = all_data['session']
                     # mask rect
                     draw.rectangle([(0, y_top), (screen_width, y_bottom)], fill=225)
                     if racer_data is None:
-                        draw.text((screen_width / 2, screen_height / 2), 'Racer not found', fill='black', font=font1)
+                        draw.text((15, top_half_line_height), 'Racer not found', fill='black', font=font1)
+                        draw.text((15, bottom_half_line_height), session_data['sessionCountDown'], fill='black', font=font1)
                     elif racer_data['sessionCountDown'] == '0:0':
-                        draw.text((screen_width / 2, screen_height / 2), 'Session Ended', fill='black', font=font1)   
+                        draw.text((15, top_half_line_height), 'Session Ended', fill='black', font=font1)   
                     else:          
                         print(racer_data)
 
@@ -120,7 +121,7 @@ async def connect():
                         draw.text((145, bottom_half_line_height), racer_data['bestLapTime'], fill='black', font=font1)
 
                         # count down
-                        draw.text((17, bottom_half_line_height), racer_data['sessionCountDown'], fill='black', font=font1)
+                        draw.text((17, bottom_half_line_height), session_data['sessionCountDown'], fill='black', font=font1)
                     epd.displayPartial(epd.getbuffer(time_image))
                 except websockets.exceptions.ConnectionClosed:
                     print("Disconnected from the server")
