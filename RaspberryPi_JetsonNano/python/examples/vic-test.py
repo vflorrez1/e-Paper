@@ -81,7 +81,7 @@ async def connect():
             while (True):
                 try:
                     data = await ws.recv()
-                    all_data = parse_object(data, 'Paul Bazooka')
+                    all_data = parse_object(data, 'Ben M')
                     racer_data = all_data['racer']
                     session_data = all_data['session']
                     # mask rect
