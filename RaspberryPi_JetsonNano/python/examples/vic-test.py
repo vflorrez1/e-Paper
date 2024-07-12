@@ -82,7 +82,7 @@ async def connect():
             while (True):
                 try:
                     data = await ws.recv()
-                    racer_data = parse_object(data, 'Docklands Kart 4')
+                    racer_data = parse_object(data, 'Paul Bazooka')
 
                     if racer_data is None:
                         draw.text((screen_width / 2, screen_height / 2), 'Racer not found', fill=0, font=font1)
