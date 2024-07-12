@@ -62,7 +62,7 @@ async def connect():
 
             try:
                 driver_d = await ws.recv()
-                print(driver_d['D'])
+                print(driver_d)
                 name = driver_d['D'][0]['N']
             except Exception as error:
                     print("could not get random name")    
