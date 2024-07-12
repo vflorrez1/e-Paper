@@ -3,6 +3,7 @@
 import sys
 import os
 import asyncio
+import json
 import websockets
 from parse_object import parse_object
 
@@ -63,7 +64,8 @@ async def connect():
             try:
                 driver_d = await ws.recv()
                 print(driver_d)
-                name = driver_d['D'][0]['N']
+                jsn_data = json.loads(driver_d)
+                name = jsn_data['D'][0]['N']
             except Exception as error:
                     print("could not get random name")    
             
