@@ -26,7 +26,13 @@ try:
     # Drawing on the image
     font1 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 24)
 
-    y_top, y_mid, y_top = 0, 50, 100
+    y_top, y_mid, y_bottom = 0, 50, 100
+
+    print('epd width', epd.width)
+    print('epd height', epd.height)
+
+    print('my bottom', y_bottom)
+    print('y top', y_top)
 
     # # partial update
     logging.info("Vics test time...")
