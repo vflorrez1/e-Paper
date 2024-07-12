@@ -62,7 +62,6 @@ def parse_object(data: dict, name: str) -> None:
     print("Session Data:")
     print(json.dumps(session_data, indent=4))
 
-    print("Racer Data:")
     if racer_data:
         new_ob = {
             "session": session_data,
