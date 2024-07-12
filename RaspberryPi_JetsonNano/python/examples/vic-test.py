@@ -27,7 +27,7 @@ import logging
 from waveshare_epd import epd2in13_V4
 from PIL import Image, ImageDraw, ImageFont
 
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.DEBUG)
 
 async def connect():
     try:
