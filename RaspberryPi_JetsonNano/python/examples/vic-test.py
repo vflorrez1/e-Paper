@@ -86,6 +86,8 @@ async def connect():
 
                     if racer_data is None:
                         draw.text((screen_width / 2, screen_height / 2), 'Racer not found', fill=0, font=font1)
+                    elif racer_data['sessionCountDown'] == '0:0':
+                        draw.text((screen_width / 2, screen_height / 2), 'Session Ended', fill=0, font=font1)   
                     else:          
                         print(racer_data)
                         # mask rect
