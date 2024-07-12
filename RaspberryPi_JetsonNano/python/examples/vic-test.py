@@ -56,14 +56,21 @@ async def connect():
         time_image = Image.new('1', (epd.height, epd.width), 255)
         draw = ImageDraw.Draw(time_image)
         epd.displayPartBaseImage(epd.getbuffer(time_image))
+        name = driver_name
         async with websockets.connect(url) as ws:
             print("Connected to the server")
             await ws.send(initWSMessage)
+
+            try:
+                driver_d = await ws.recv()
+                name = driver_d['D'][0]['N']
+            except Exception as error:
+                    print("could not get random name")    
             
             while (True):
                 try:
                     data = await ws.recv()
-                    all_data = parse_object(data, driver_name)
+                    all_data = parse_object(data, name)
                     racer_data = all_data['racer']
                     session_data = all_data['session']
                     # mask rect
