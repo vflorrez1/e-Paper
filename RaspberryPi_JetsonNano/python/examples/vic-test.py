@@ -58,8 +58,8 @@ async def connect():
         epd.displayPartBaseImage(epd.getbuffer(time_image))
         name = driver_name
 
-        def draw_text(x, y, text):
-            draw.text((x, y), text, font=font1, fill='black')
+        def draw_text(cords, text):
+            draw.text(cords, text, font=font1, fill='black')
 
         async with websockets.connect(url) as ws:
             print("Connected to the server")
@@ -79,16 +79,19 @@ async def connect():
                     all_data = parse_object(data, name) # ++++++++++++++++++++++++++++++++++++++++++++++++
                     racer_data = all_data['racer']
                     session_data = all_data['session']
+
                     # mask rect
                     draw.rectangle([(0, y_top), (screen_width, y_bottom)], fill=225)
                     if racer_data is None:
-                        draw.text((15, top_half_line_height), 'Racer not found', fill='black', font=font1)
-                        draw.text((15, bottom_half_line_height), session_data['sessionCountDown'], fill='black', font=font1)
+                        draw_text((15, top_half_line_height), 'Racer not found')
+                        draw_text((15, bottom_half_line_height), session_data['sessionCountDown'])
+
+                        # find another random driver
                         jsn_d = json.loads(data)
                         if jsn_d and len(jsn_d['D']) > 0:
                             name = jsn_d['D'][0]['N']
                     elif session_data['sessionCountDown'] == '00:00':
-                        draw.text((15, top_half_line_height), 'Session Ended', fill='black', font=font1)   
+                        draw_text((15, top_half_line_height), 'Session Ended')   
                     else:          
                         print(racer_data)
 
@@ -107,19 +110,19 @@ async def connect():
                         draw.line([(screen_width / 2, y_mid), (screen_width / 2, y_bottom)], fill=0, width=1)
 
                         # position
-                        draw_text(15, top_half_line_height, 'P' + str(racer_data['position']))
+                        draw_text((15, top_half_line_height), 'P' + str(racer_data['position']))
 
                         # last lap
-                        draw_text(70, top_half_line_height, racer_data['currentLapTime'])
+                        draw_text((70, top_half_line_height), racer_data['currentLapTime'])
 
                         # delta
-                        draw_text(170, top_half_line_height, racer_data['delta'])
+                        draw_text((170, top_half_line_height), racer_data['delta'])
 
                         # best lap
-                        draw_text(145, bottom_half_line_height, racer_data['bestLapTime'])
+                        draw_text((145, bottom_half_line_height), racer_data['bestLapTime'])
 
                         # count down
-                        draw_text(17, bottom_half_line_height, session_data['sessionCountDown'])
+                        draw_text((17, bottom_half_line_height), session_data['sessionCountDown'])
 
                     epd.displayPartial(epd.getbuffer(time_image))
                 except websockets.exceptions.ConnectionClosed:
