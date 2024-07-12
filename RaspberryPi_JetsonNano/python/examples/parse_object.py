@@ -48,6 +48,7 @@ def parse_object(data: dict, name: str) -> None:
     racer_data = next((racer for racer in data["D"] if racer["N"] == name), None)
     
     print("Session Data:")
+    print('session time', data['C'])
     print(json.dumps(session_data, indent=4))
 
     print("Racer Data:")
