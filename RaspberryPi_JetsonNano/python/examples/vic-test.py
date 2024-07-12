@@ -87,6 +87,7 @@ async def connect():
                     if racer_data is None:
                         draw.text((screen_width / 2, screen_height / 2), 'Racer not found', fill=0, font=font1)
                     else:          
+                        print(racer_data)
                         # mask rect
                         draw.rectangle([(0, y_top), (screen_width, y_bottom)], fill=225)
                         # top rect
