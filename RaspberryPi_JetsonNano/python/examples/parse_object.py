@@ -52,7 +52,7 @@ def parse_object(data: dict, name: str) -> None:
 
     print("Racer Data:")
     if racer_data:
-        print(json.dumps(parse_racer(racer_data), indent=4))
+        return parse_racer(racer_data)
     else:
         print("Racer not found in data.")
 

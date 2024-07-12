@@ -43,7 +43,6 @@ import logging
 from waveshare_epd import epd2in13_V4
 import time
 from PIL import Image, ImageDraw, ImageFont
-import traceback
 
 logging.basicConfig(level=logging.DEBUG)
 
@@ -75,41 +74,55 @@ async def connect():
         draw = ImageDraw.Draw(time_image)
         epd.displayPartBaseImage(epd.getbuffer(time_image))
         num = 0
-        while (True):
-            # mask rect
-            draw.rectangle([(0, y_top), (screen_width, y_bottom)], fill=225)
-            # top rect
-            draw.rectangle([(0, y_top), (screen_width, y_mid)], outline=0)
+        async with websockets.connect(url) as ws:
+            print("Connected to the server")
+            await ws.send(initWSMessage)
+            
+            while (True):
+                try:
+                    data = await ws.recv()
+                    racer_data = parse_object(data, 'Docklands Kart 4')
+                              
+                    # mask rect
+                    draw.rectangle([(0, y_top), (screen_width, y_bottom)], fill=225)
+                    # top rect
+                    draw.rectangle([(0, y_top), (screen_width, y_mid)], outline=0)
 
-            # top first line
-            draw.line([(top_line_1, y_top), (top_line_1, y_mid)], fill=0, width=1)
+                    # top first line
+                    draw.line([(top_line_1, y_top), (top_line_1, y_mid)], fill=0, width=1)
 
-            # top second line
-            draw.line([(top_line_2, 0), (top_line_2, y_mid)], fill=0, width=1)
+                    # top second line
+                    draw.line([(top_line_2, 0), (top_line_2, y_mid)], fill=0, width=1)
 
-            # bottom rect
-            draw.rectangle([(0, y_mid), (screen_width, y_bottom)], outline=0)
+                    # bottom rect
+                    draw.rectangle([(0, y_mid), (screen_width, y_bottom)], outline=0)
 
-            draw.line([(screen_width / 2, y_mid), (screen_width / 2, y_bottom)], fill=0, width=1)
+                    draw.line([(screen_width / 2, y_mid), (screen_width / 2, y_bottom)], fill=0, width=1)
 
-            # position
-            draw.text((15, top_half_line_height), 'P1', fill='black', font=font1)
+                    # position
+                    draw.text((15, top_half_line_height), 'P1', fill='black', font=font1)
 
-            # last lap
-            draw.text((70, top_half_line_height), '43.114', fill='black', font=font1)
+                    # last lap
+                    draw.text((70, top_half_line_height), '43.114', fill='black', font=font1)
 
-            # delta
-            draw.text((170, top_half_line_height), '0.455', fill='black', font=font1)
+                    # delta
+                    draw.text((170, top_half_line_height), '0.455', fill='black', font=font1)
 
-            # best lap
-            draw.text((145, bottom_half_line_height), '43.115', fill='black', font=font1)
+                    # best lap
+                    draw.text((145, bottom_half_line_height), '43.115', fill='black', font=font1)
 
-            # count down
-            draw.text((17, bottom_half_line_height), time.strftime('%H:%M:%S'), fill='black', font=font1)
-            epd.displayPartial(epd.getbuffer(time_image))
-            num = num + 1
-            if (num == 20):
-                break
+                    # count down
+                    draw.text((17, bottom_half_line_height), racer_data['sessionCountDown'], fill='black', font=font1)
+                    epd.displayPartial(epd.getbuffer(time_image))
+                    num = num + 1
+                    if (num == 20):
+                        break
+                except websockets.exceptions.ConnectionClosed:
+                    print("Disconnected from the server")
+                    break
+                except Exception as error:
+                    print("WebSocket error:", error)
+                    break  
 
         logging.info("Clear...")
         epd.init()
