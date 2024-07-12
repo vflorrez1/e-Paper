@@ -120,7 +120,7 @@ async def connect():
 
                         # count down
                         draw.text((17, bottom_half_line_height), racer_data['sessionCountDown'], fill='black', font=font1)
-                        epd.displayPartial(epd.getbuffer(time_image))
+                    epd.displayPartial(epd.getbuffer(time_image))
                 except websockets.exceptions.ConnectionClosed:
                     print("Disconnected from the server")
                     break
