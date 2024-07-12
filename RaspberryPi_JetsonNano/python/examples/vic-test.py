@@ -84,14 +84,15 @@ async def connect():
                     data = await ws.recv()
                     racer_data = parse_object(data, 'Paul Bazooka')
 
+                    # mask rect
+                    draw.rectangle([(0, y_top), (screen_width, y_bottom)], fill=225)
                     if racer_data is None:
                         draw.text((screen_width / 2, screen_height / 2), 'Racer not found', fill='black', font=font1)
                     elif racer_data['sessionCountDown'] == '0:0':
                         draw.text((screen_width / 2, screen_height / 2), 'Session Ended', fill='black', font=font1)   
                     else:          
                         print(racer_data)
-                        # mask rect
-                        draw.rectangle([(0, y_top), (screen_width, y_bottom)], fill=225)
+
                         # top rect
                         draw.rectangle([(0, y_top), (screen_width, y_mid)], outline=0)
 
