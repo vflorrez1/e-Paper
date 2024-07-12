@@ -5,10 +5,7 @@ import os
 import asyncio
 import websockets
 from parse_object import parse_object
-import logging
-from waveshare_epd import epd2in13_V4
-import time
-from PIL import Image, ImageDraw, ImageFont
+
 
 config = {
     "url": "wss://webserver14.sms-timing.com:10015/",
@@ -42,6 +39,11 @@ picdir = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__)
 libdir = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'lib')
 if os.path.exists(libdir):
     sys.path.append(libdir)
+
+import logging
+from waveshare_epd import epd2in13_V4
+import time
+from PIL import Image, ImageDraw, ImageFont
 
 logging.basicConfig(level=logging.DEBUG)
 
