@@ -85,7 +85,7 @@ async def connect():
                     racer_data = parse_object(data, 'Docklands Kart 4')
 
                     if racer_data is None:
-                        draw.text((10, 10), 'Racer not found', fill='black', font=font1)
+                        draw.text((screen_width / 2, screen_height / 2), 'Racer not found', fill=0, font=font1)
                     else:          
                         # mask rect
                         draw.rectangle([(0, y_top), (screen_width, y_bottom)], fill=225)
