@@ -27,7 +27,7 @@ import logging
 from waveshare_epd import epd2in13_V4
 from PIL import Image, ImageDraw, ImageFont
 
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.INFO)
 
 async def connect():
     try:
@@ -71,8 +71,8 @@ async def connect():
             while (True):
                 try:
                     data = await ws.recv()
-                    # OVVERIDE THE NAME OF THE DRIVER HERE ++++++++++++++++++++++++++++++++++++++++++++++++
-                    all_data = parse_object(data, name)
+                    # OVVERIDE THE NAME OF THE DRIVER HERE
+                    all_data = parse_object(data, name) # ++++++++++++++++++++++++++++++++++++++++++++++++
                     racer_data = all_data['racer']
                     session_data = all_data['session']
                     # mask rect
