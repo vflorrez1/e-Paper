@@ -105,16 +105,16 @@ async def connect():
                         draw.line([(screen_width / 2, y_mid), (screen_width / 2, y_bottom)], fill=0, width=1)
 
                         # position
-                        draw.text((15, top_half_line_height), 'P1', fill='black', font=font1)
+                        draw.text((15, top_half_line_height), 'P' + racer_data['position'], fill='black', font=font1)
 
                         # last lap
-                        draw.text((70, top_half_line_height), '43.114', fill='black', font=font1)
+                        draw.text((70, top_half_line_height), racer_data['currentLapTime'], fill='black', font=font1)
 
                         # delta
-                        draw.text((170, top_half_line_height), '0.455', fill='black', font=font1)
+                        draw.text((170, top_half_line_height), racer_data['delta'], fill='black', font=font1)
 
                         # best lap
-                        draw.text((145, bottom_half_line_height), '43.115', fill='black', font=font1)
+                        draw.text((145, bottom_half_line_height), racer_data['bestLapTime'], fill='black', font=font1)
 
                         # count down
                         draw.text((17, bottom_half_line_height), racer_data['sessionCountDown'], fill='black', font=font1)
