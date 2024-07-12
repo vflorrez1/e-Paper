@@ -63,7 +63,6 @@ async def connect():
 
             try:
                 driver_d = await ws.recv()
-                print(driver_d)
                 jsn_data = json.loads(driver_d)
                 name = jsn_data['D'][0]['N']
             except Exception as error:
@@ -72,6 +71,7 @@ async def connect():
             while (True):
                 try:
                     data = await ws.recv()
+                    # OVVERIDE THE NAME OF THE DRIVER HERE ++++++++++++++++++++++++++++++++++++++++++++++++
                     all_data = parse_object(data, name)
                     racer_data = all_data['racer']
                     session_data = all_data['session']
@@ -80,7 +80,7 @@ async def connect():
                     if racer_data is None:
                         draw.text((15, top_half_line_height), 'Racer not found', fill='black', font=font1)
                         draw.text((15, bottom_half_line_height), session_data['sessionCountDown'], fill='black', font=font1)
-                    elif session_data['sessionCountDown'] == '0:0':
+                    elif session_data['sessionCountDown'] == '00:00':
                         draw.text((15, top_half_line_height), 'Session Ended', fill='black', font=font1)   
                     else:          
                         print(racer_data)
