@@ -80,6 +80,8 @@ async def connect():
                     if racer_data is None:
                         draw.text((15, top_half_line_height), 'Racer not found', fill='black', font=font1)
                         draw.text((15, bottom_half_line_height), session_data['sessionCountDown'], fill='black', font=font1)
+                        jsn_d = json.loads(data)
+                        name = jsn_d['D'][0]['N']
                     elif session_data['sessionCountDown'] == '00:00':
                         draw.text((15, top_half_line_height), 'Session Ended', fill='black', font=font1)   
                     else:          
