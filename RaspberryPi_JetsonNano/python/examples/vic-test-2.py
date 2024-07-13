@@ -20,7 +20,7 @@ try:
     epd = epd2in13d.EPD()
     logging.info("init and Clear")
     epd.init()
-    epd.Clear(0xFF)
+    epd.Clear()
 
     # Drawing on the image
     font1 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 24)
@@ -80,7 +80,7 @@ try:
     
     logging.info("Clear...")
     epd.init()
-    epd.Clear(0xFF)
+    epd.Clear()
     
     logging.info("Goto Sleep...")
     epd.sleep()
