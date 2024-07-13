@@ -114,6 +114,7 @@ async def connect():
                     # mask rect
                     # draw.rectangle([(0, y_top), (screen_width, y_bottom)], fill=225)
                     if racer_data is None:
+                        draw.rectangle([(0, y_top), (screen_width, y_bottom)], fill=225)
                         draw_text((15, top_half_line_height), 'Racer not found')
                         draw_text((15, bottom_half_line_height), session_data['sessionCountDown'])
 
@@ -123,6 +124,7 @@ async def connect():
                             name = jsn_d['D'][0]['N']
                             draw_outline()
                     elif session_data['sessionCountDown'] == '00:00':
+                        draw.rectangle([(0, y_top), (screen_width, y_bottom)], fill=225)
                         draw_text((15, top_half_line_height), 'Session Ended')   
                     else:          
                         print("Racer Data:")
