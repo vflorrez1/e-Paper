@@ -39,7 +39,7 @@ async def connect():
         epd.Clear()
 
         # Drawing on the image
-        font1 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 24)
+        font1 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 20)
         screen_width = epd.height
         screen_height = epd.width
 
