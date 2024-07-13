@@ -73,8 +73,7 @@ try:
 
         # count down
         draw.text((17, bottom_half_line_height), time.strftime('%H:%M:%S'), fill='black', font=font1)
-        # epd.displayPartial(epd.getbuffer(time_image))
-        epd.display(epd.getbuffer(time_image))
+        epd.DisplayPartial(epd.getbuffer(time_image))
         num = num + 1
         if(num == 20):
             break
