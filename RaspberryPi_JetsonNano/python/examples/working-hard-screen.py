@@ -24,7 +24,7 @@ if os.path.exists(libdir):
     sys.path.append(libdir)
 
 import logging
-from waveshare_epd import epd2in13d
+from waveshare_epd import epd2in13_V4
 from PIL import Image, ImageDraw, ImageFont
 
 logging.basicConfig(level=logging.INFO)
@@ -33,10 +33,10 @@ async def connect():
     try:
         logging.info("epd2in13_V4 Demo")
 
-        epd = epd2in13d.EPD()
+        epd = epd2in13_V4.EPD()
         logging.info("init and Clear")
         epd.init()
-        epd.Clear()
+        epd.Clear(0xFF)
 
         # Drawing on the image
         font1 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 24)
@@ -55,7 +55,7 @@ async def connect():
         logging.info("Vics test time...")
         time_image = Image.new('1', (epd.height, epd.width), 255)
         draw = ImageDraw.Draw(time_image)
-        # epd.displayPartBaseImage(epd.getbuffer(time_image))
+        epd.displayPartBaseImage(epd.getbuffer(time_image))
         name = driver_name
 
         def draw_text(cords, text):
@@ -125,7 +125,7 @@ async def connect():
                         # count down
                         draw_text((17, bottom_half_line_height), session_data['sessionCountDown'])
 
-                    epd.DisplayPartial(epd.getbuffer(time_image))
+                    epd.displayPartial(epd.getbuffer(time_image))
                 except websockets.exceptions.ConnectionClosed:
                     print("Disconnected from the server")
                     break
@@ -135,7 +135,7 @@ async def connect():
 
         logging.info("Clear...")
         epd.init()
-        epd.Clear()
+        epd.Clear(0xFF)
 
         logging.info("Goto Sleep...")
         epd.sleep()
@@ -145,7 +145,7 @@ async def connect():
 
     except KeyboardInterrupt:
         logging.info("ctrl + c:")
-        epd2in13d.epdconfig.module_exit(cleanup=True)
+        epd2in13_V4.epdconfig.module_exit(cleanup=True)
         exit()
 
 if __name__ == "__main__":
