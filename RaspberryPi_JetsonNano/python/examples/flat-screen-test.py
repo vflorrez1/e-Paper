@@ -64,7 +64,7 @@ async def connect():
             x, y = cords
             mask_first_cord = (x , y - 4)
             mask_second_cord = (x + 20, y + 4)
-            draw.rectangle([mask_first_cord, mask_second_cord], fill=225)
+            draw.rectangle([mask_first_cord, mask_second_cord], fill='black')
             draw.text(cords, text, font=font1, fill='black')
 
         def draw_outline():
