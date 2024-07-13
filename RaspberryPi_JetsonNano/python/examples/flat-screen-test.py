@@ -63,7 +63,7 @@ async def connect():
         def draw_text(cords, text):
             x, y = cords
             mask_first_cord = (x , y - 4)
-            mask_second_cord = (x + 20, y - 20)
+            mask_second_cord = (x + 20, y + 25)
             draw.rectangle([mask_first_cord, mask_second_cord], fill='black')
             draw.text(cords, text, font=font1, fill='black')
 
