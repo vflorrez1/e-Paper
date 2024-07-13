@@ -66,7 +66,6 @@ async def connect():
             mask_second_cord = (x + (20 * multiplier), y + 25)
             draw.rectangle([mask_first_cord, mask_second_cord], fill=225)
             draw.text(cords, text, font=font1, fill='black')
-            epd.DisplayPartial(epd.getbuffer(time_image))
 
         def draw_outline():
             # top rect
@@ -144,6 +143,7 @@ async def connect():
 
                         # count down
                         draw_text((17, bottom_half_line_height), session_data['sessionCountDown'], 3)
+                        epd.DisplayPartial(epd.getbuffer(time_image))
 
                     
                 except websockets.exceptions.ConnectionClosed:
