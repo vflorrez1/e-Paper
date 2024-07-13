@@ -40,7 +40,7 @@ try:
     logging.info("Vics test time...")
     time_image = Image.new('1', (epd.height, epd.width), 255)
     draw = ImageDraw.Draw(time_image)
-    epd.displayPartBaseImage(epd.getbuffer(time_image))
+    # epd.displayPartBaseImage(epd.getbuffer(time_image))
     num = 0
     while (True):
         # mask rect
@@ -73,7 +73,8 @@ try:
 
         # count down
         draw.text((17, bottom_half_line_height), time.strftime('%H:%M:%S'), fill='black', font=font1)
-        epd.displayPartial(epd.getbuffer(time_image))
+        # epd.displayPartial(epd.getbuffer(time_image))
+        epd.display(epd.getbuffer(time_image))
         num = num + 1
         if(num == 20):
             break
