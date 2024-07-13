@@ -60,12 +60,13 @@ async def connect():
         # epd.displayPartBaseImage(epd.getbuffer(time_image))
         name = driver_name
 
-        def draw_text(cords, text):
+        def draw_text(cords, text, multiplier=1):
             x, y = cords
             mask_first_cord = (x , y - 4)
-            mask_second_cord = (x + 20, y + 25)
-            draw.rectangle([mask_first_cord, mask_second_cord], fill='black')
+            mask_second_cord = (x + (20 * multiplier), y + 25)
+            draw.rectangle([mask_first_cord, mask_second_cord], fill=225)
             draw.text(cords, text, font=font1, fill='black')
+            epd.DisplayPartial(epd.getbuffer(time_image))
 
         def draw_outline():
             # top rect
@@ -82,6 +83,7 @@ async def connect():
 
             # bottom line
             draw.line([(screen_width / 2, y_mid), (screen_width / 2, y_bottom)], fill=0, width=1)
+            epd.DisplayPartial(epd.getbuffer(time_image))
 
         async with websockets.connect(url) as ws:
             print("Connected to the server")
@@ -127,21 +129,21 @@ async def connect():
                         print(json.dumps(racer_data, indent=4))
 
                         # position
-                        draw_text((15, top_half_line_height), 'P' + str(racer_data['position']))
+                        draw_text((15, top_half_line_height), 'P' + str(racer_data['position']), 1)
 
                         # last lap
-                        draw_text((70, top_half_line_height), racer_data['currentLapTime'])
+                        draw_text((70, top_half_line_height), racer_data['currentLapTime'], 3)
 
                         # delta
-                        draw_text((170, top_half_line_height), racer_data['delta'])
+                        draw_text((170, top_half_line_height), racer_data['delta'], 3)
 
                         # best lap
-                        draw_text((145, bottom_half_line_height), racer_data['bestLapTime'])
+                        draw_text((145, bottom_half_line_height), racer_data['bestLapTime'], 3)
 
                         # count down
-                        draw_text((17, bottom_half_line_height), session_data['sessionCountDown'])
+                        draw_text((17, bottom_half_line_height), session_data['sessionCountDown'], 3)
 
-                    epd.DisplayPartial(epd.getbuffer(time_image))
+                    
                 except websockets.exceptions.ConnectionClosed:
                     print("Disconnected from the server")
                     break
