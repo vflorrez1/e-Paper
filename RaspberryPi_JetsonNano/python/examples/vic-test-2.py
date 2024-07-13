@@ -8,7 +8,7 @@ if os.path.exists(libdir):
     sys.path.append(libdir)
 
 import logging
-from waveshare_epd import epd2in13_V4
+from waveshare_epd import epd2in13d
 import time
 from PIL import Image,ImageDraw,ImageFont
 
@@ -17,7 +17,7 @@ logging.basicConfig(level=logging.DEBUG)
 try:
     logging.info("epd2in13_V4 Demo")
     
-    epd = epd2in13_V4.EPD()
+    epd = epd2in13d.EPD()
     logging.info("init and Clear")
     epd.init()
     epd.Clear(0xFF)
@@ -90,5 +90,5 @@ except IOError as e:
     
 except KeyboardInterrupt:    
     logging.info("ctrl + c:")
-    epd2in13_V4.epdconfig.module_exit(cleanup=True)
+    epd2in13d.epdconfig.module_exit(cleanup=True)
     exit()
