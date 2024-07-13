@@ -51,6 +51,8 @@ async def connect():
         top_half_line_height = 20
         bottom_half_line_height = 80
 
+        outline_on = False
+
         # # partial update
         logging.info("Vics test time...")
         time_image = Image.new('1', (epd.height, epd.width), 255)
@@ -65,6 +67,22 @@ async def connect():
             draw.rectangle([mask_first_cord, mask_second_cord], fill=225)
             draw.text(cords, text, font=font1, fill='black')
 
+        def draw_outline():
+            # top rect
+            draw.rectangle([(0, y_top), (screen_width, y_mid)], outline=0)
+
+            # top first line
+            draw.line([(top_line_1, y_top), (top_line_1, y_mid)], fill=0, width=1)
+
+            # top second line
+            draw.line([(top_line_2, 0), (top_line_2, y_mid)], fill=0, width=1)
+
+            # bottom rect
+            draw.rectangle([(0, y_mid), (screen_width, y_bottom)], outline=0)
+
+            # bottom line
+            draw.line([(screen_width / 2, y_mid), (screen_width / 2, y_bottom)], fill=0, width=1)
+
         async with websockets.connect(url) as ws:
             print("Connected to the server")
             await ws.send(initWSMessage)
@@ -72,9 +90,13 @@ async def connect():
             try:
                 driver_d = await ws.recv()
                 jsn_data = json.loads(driver_d)
-                name = jsn_data['D'][0]['N']
+                if jsn_data and len(jsn_data['D']) > 0:
+                    name = jsn_data['D'][0]['N']
+                    draw_outline()
             except Exception as error:
                     print("could not get random name")    
+
+
 
             tmp_racer_date = None        
             
@@ -97,25 +119,12 @@ async def connect():
                         jsn_d = json.loads(data)
                         if jsn_d and len(jsn_d['D']) > 0:
                             name = jsn_d['D'][0]['N']
+                            draw_outline()
                     elif session_data['sessionCountDown'] == '00:00':
                         draw_text((15, top_half_line_height), 'Session Ended')   
                     else:          
                         print("Racer Data:")
                         print(json.dumps(racer_data, indent=4))
-
-                        # top rect
-                        draw.rectangle([(0, y_top), (screen_width, y_mid)], outline=0)
-
-                        # top first line
-                        draw.line([(top_line_1, y_top), (top_line_1, y_mid)], fill=0, width=1)
-
-                        # top second line
-                        draw.line([(top_line_2, 0), (top_line_2, y_mid)], fill=0, width=1)
-
-                        # bottom rect
-                        draw.rectangle([(0, y_mid), (screen_width, y_bottom)], outline=0)
-
-                        draw.line([(screen_width / 2, y_mid), (screen_width / 2, y_bottom)], fill=0, width=1)
 
                         # position
                         draw_text((15, top_half_line_height), 'P' + str(racer_data['position']))
