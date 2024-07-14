@@ -96,9 +96,6 @@ async def connect():
             except Exception as error:
                     print("could not get random name")    
 
-
-
-            tmp_racer_date = None        
             
             while (True):
                 try:
