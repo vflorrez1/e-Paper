@@ -49,9 +49,8 @@ async def connect():
         top_line_1 = 50
         top_line_2 = (screen_width + top_line_1) / 2
         top_half_line_height = 20
-        bottom_half_line_height = 80
+        bottom_half_line_height = 60
 
-        outline_on = False
 
         # # partial update
         logging.info("Vics test time...")
@@ -133,10 +132,10 @@ async def connect():
                         draw_text((15, top_half_line_height), 'P' + str(racer_data['position']), 1)
 
                         # last lap
-                        draw_text((70, top_half_line_height), racer_data['currentLapTime'], 3)
+                        draw_text((65, top_half_line_height), racer_data['currentLapTime'], 3)
 
                         # delta
-                        draw_text((170, top_half_line_height), racer_data['delta'], 3)
+                        draw_text((150, top_half_line_height), racer_data['delta'], 3)
 
                         # best lap
                         draw_text((145, bottom_half_line_height), racer_data['bestLapTime'], 3)
