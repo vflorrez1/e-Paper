@@ -81,7 +81,6 @@ async def connect():
 
             # bottom line
             draw.line([(screen_width / 2, y_mid), (screen_width / 2, y_bottom)], fill=0, width=1)
-            epd.DisplayPartial(epd.getbuffer(time_image))
 
         async with websockets.connect(url) as ws:
             print("Connected to the server")
@@ -112,7 +111,7 @@ async def connect():
                         draw.rectangle([(0, y_top), (screen_width, y_bottom)], fill=225)
                         draw_text((15, top_half_line_height), 'Racer not found')
                         draw_text((15, bottom_half_line_height), session_data['sessionCountDown'])
-
+                        epd.DisplayPartial(epd.getbuffer(time_image))
                         # find another random driver
                         jsn_d = json.loads(data)
                         if jsn_d and len(jsn_d['D']) > 0:
@@ -120,7 +119,8 @@ async def connect():
                             draw_outline()
                     elif session_data['sessionCountDown'] == '00:00':
                         draw.rectangle([(0, y_top), (screen_width, y_bottom)], fill=225)
-                        draw_text((15, top_half_line_height), 'Session Ended')   
+                        draw_text((15, top_half_line_height), 'Session Ended')
+                        epd.DisplayPartial(epd.getbuffer(time_image))
                     else:          
                         print("Racer Data:")
                         print(json.dumps(racer_data, indent=4))
